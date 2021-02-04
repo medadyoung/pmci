@@ -1649,6 +1649,27 @@ int decode_get_sensor_hysteresis_resp(const struct pldm_msg *msg, size_t payload
 	return PLDM_SUCCESS;
 }
 
+int decode_set_state_sensor_enable_resp(
+    const struct pldm_msg *msg, size_t payload_length, uint8_t *completion_code, uint8_t *sensorOperationalState, uint8_t *eventMessageEnable)
+{
+	if (msg == NULL || completion_code == NULL) {
+		return PLDM_ERROR_INVALID_DATA;
+	}
+
+	*completion_code = msg->payload[0];
+	if (PLDM_SUCCESS != *completion_code) {
+		return PLDM_SUCCESS;
+	}
+
+	if (payload_length > PLDM_SET_STATE_SENSOR_ENABLE_RESP_BYTES) {
+		return PLDM_ERROR_INVALID_LENGTH;
+	}
+
+	*sensorOperationalState = msg->payload[1];
+	*eventMessageEnable = msg->payload[2];
+	return PLDM_SUCCESS;
+}
+
 int decode_set_numeric_sensor_enable_resp(
     const struct pldm_msg *msg, size_t payload_length, uint8_t *completion_code)
 {

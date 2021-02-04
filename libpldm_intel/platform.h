@@ -21,6 +21,7 @@ extern "C" {
 #define PLDM_SET_NUMERIC_SENSOR_ENABLE_RESP_BYTES 1
 #define PLDM_SET_NUMERIC_EFFECTER_VALUE_RESP_BYTES 1
 #define PLDM_SET_NUMERIC_EFFECTER_VALUE_MIN_REQ_BYTES 4
+#define PLDM_SET_STATE_SENSOR_ENABLE_RESP_BYTES 3
 
 #define PLDM_GET_PDR_REQ_BYTES 13
 /* Minimum response length */
@@ -1757,6 +1758,17 @@ int decode_pldm_pdr_repository_change_record_data(
 
 int decode_set_numeric_sensor_enable_resp(
     const struct pldm_msg *msg, size_t payload_length, uint8_t *completion_code);
+
+/** @brief decode_set_state_sensor_enable_resp response data
+ *
+ *  @param[in] msg - Request message
+ *  @param[in] payload_length - Length of response message payload
+ *  @param[out] completion_code - PLDM completion code
+ *  @return pldm_completion_codes
+ */
+
+int decode_set_state_sensor_enable_resp(
+    const struct pldm_msg *msg, size_t payload_length, uint8_t *completion_code, uint8_t *sensorOperationalState, uint8_t *eventMessageEnable);
 
 /* GetSensorReading */
 
